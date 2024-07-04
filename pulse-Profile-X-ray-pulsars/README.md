@@ -20,8 +20,7 @@ They comprise a neutron star, which is the smaller and more compact of the two s
 The donor star supplies matter to the denser neutron star. 
 However, the neutron star is surrounded by a robust magnetosphere, which deflects and guides the matter along the field lines, and reaches the surface at the poles. 
 Upon reaching the surface, a considerable amount of energy is released in the form of X-rays. 
-This process can be compared to the phenomenon of the northern lights, which shine in our skies on Earth. 
-However, instead of being aesthetically pleasing and romantic, they are magnificent and disruptive.
+This process can be compared to the phenomenon of the northern lights, which shine in our skies on Earth, but it is incredibly distruptive.
 ![ESA accreting pulsar](images/AccretingPulsar.jpeg)
 
 ### How do we observe them and which parameters do we need
@@ -88,9 +87,10 @@ in different parquet files in the same specified folder, and then there is a fun
 
 - **Pulsar_Notebook.ipynb**: This is a notebook equivalent to the main one that explains the process in detail, thus facilitating a better understanding.
 
+- **Database folder**:
+  - **Database_100000.parquet**: This is the actual database containing the data simulated. It has been created with 100,000     simulated datasets and is ready to be used, for example, with ReadParquet and Compare. Useful to run the codes fast, to understand how they work, since it has a relatively small size compared to the final one.
 
-- **Database_100000.parquet**: This is the actual database containing the data simulated. It has been created with 100,000 simulated datasets and is ready to be used, for example, with ReadParquet and Compare.
-There will be a link to a bigger file, the definitive one, with more than 25 million datasets created, but GitHub did not allow me the upload
+  - **LinkFullDatabase.md**: link to the full created database with more than 25 milion datasets created. Use this for research.
 
 
 # Prerequisites
@@ -103,9 +103,13 @@ In order to run properly all parts of the project, the following packages should
 - scipy.interpolate
 - os
 - time
+<<<<<<< HEAD
 - pyarrow
 - functools
 
+=======
+- pyarrow 
+>>>>>>> 1cb7e05a28f2a807b2ba9257b1e66652d7c0d3bf
 
 # How to run the project
 It is good to read and run the Jupyter Notebook first, in order to get a better idea of what the project does. Then one can simply download the project folder and use the files with your interpreter. 
@@ -147,7 +151,8 @@ One example of dictionary in the list is the following:
 
 ## Example of usage
 The example of usage explains how to use the data produced. I fitted an experimental dataset from Cen X−3 PCVA with the simulated data. The image shows the comparison between experimental data and the best simulated fit (only 100 000 occurences taken into account).
-![fit with 100000 data](images\fit_100000.png)
+
+![fit with 100000 data](images/fit_100000.png)
 
 ## Choice of the file type
 
