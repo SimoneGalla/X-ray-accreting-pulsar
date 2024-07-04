@@ -12,7 +12,7 @@ This project defines the parameters of the x-ray pulsar and generates the expect
 - Data in the database
 
 # The physics
-The project is based on the physics and the simulation described in the PhD thesis: https://publikationen.uni-tuebingen.de/xmlui/handle/10900/144225, Saathof, 2023
+The project is based on the physics and the simulation described in the PhD thesis: https://publikationen.uni-tuebingen.de/xmlui/handle/10900/144225, Saathoff, 2023
 
 ### What are the accreting X-ray pulsars
 Accreting X-ray pulsars represent a distinctive class of binary stars. 
@@ -103,6 +103,8 @@ In order to run properly all parts of the project, the following packages should
 - scipy.interpolate
 - os
 - time
+- pyarrow
+- functools
 
 
 # How to run the project
