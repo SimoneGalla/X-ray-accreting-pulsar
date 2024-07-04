@@ -1,7 +1,7 @@
 
-# Database x-ray pulsars
+# Database simulated pulse profiles of accreting X-ray pulsars
 
-This project defines the parameters of the x-ray pulsar and generates the expected pulse profile starting from these parameters. The simulated results are then stored in a file for later usage. The files to read and compare the data are also part of the project.
+This project defines the parameters of the X-ray pulsar and generates the expected pulse profile starting from these parameters. The simulated results are then stored in a file for later usage. The files to read and compare the data are also part of the project.
 
 # Tables of contents
 - The physics
