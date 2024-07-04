@@ -50,7 +50,7 @@ Finally, it can be emitted in a mixed configuration,
 where the emission is more complicated and can happen in different directions. 
 
 The following image describes these different 
-emissions, through an accretion column:
+emissions, through an expanded accretion column:
 
 ![beam emissions](images/beams_pulsar.png)
 
@@ -61,7 +61,7 @@ normal to the surface where the hotspot is emitting from.
 Additionally, a parameter is defined that describes the "peakiness" of the observed pulse profile, namely the power of the beam emitted.
 
 It is important to point out that in the simulation the emitter is considered to be only a hotspot on the surface of the pulsar, 
-and not an accretion column. 
+and not an expanded accretion column. 
 
 A visual description of how the angles are defined is given:
 ![Angles in the project](images/angles_pulsar.png)
