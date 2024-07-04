@@ -145,7 +145,8 @@ One example of dictionary in the list is the following:
 
 ## Example of usage
 The example of usage explains how to use the data produced. I fitted an experimental dataset from Cen X−3 PCVA with the simulated data. The image shows the comparison between experimental data and the best simulated fit (only 100 000 occurences taken into account).
-![fit with 100000 data](images\fit_100000.png)
+
+![fit with 100000 data](images/fit_100000.png)
 
 ## Choice of the file type
 
