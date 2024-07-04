@@ -10,10 +10,11 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 import pandas as pd
 
 from tqdm import tqdm, trange
+from pyarrow import dataset as ds
+
 
 from functools import partial
 
-from multiprocessing import Pool
 
 import time
 
@@ -735,7 +736,7 @@ def merging(folder_path):
 
     """
     input_dir = folder_path
-    output_dir = folder_pat+"/output" #The file will be placed in this new folder
+    output_dir = folder_path+"/output" #The file will be placed in this new folder
 
     # Read the input dataset
     data = ds.dataset(input_dir, format="parquet")
@@ -803,7 +804,7 @@ def databaseCreation(length):
 
                 ### CHANGE WITH YOUR FILE PATH###
                 file_name = 'bigdata_rot_a_{0}_rot_i_{1}'.format(rot_a[b] ,rot_i[a]) # Every iteration will have its own file
-                folder_path = '/Users/Utente/Desktop/prova' #Change the name here according to your folder
+                folder_path = 'Database' #Change the name here according to your folder
                 file_path = os.path.join(folder_path, file_name)
                 open(file_path, 'w').close()  # Creates the file
 
@@ -817,7 +818,7 @@ def databaseCreation(length):
 
     print("\nTime = ", ((end - start) / 60)) # Just check the time
 
-    merging(folder_path )   # Put all the data files together in one big file
+    merging(folder_path)   # Put all the data files together in one big file
 
 
 if __name__ == "__main__":   # This is apparently needed for the PoolExecutor otherwise the code crashes

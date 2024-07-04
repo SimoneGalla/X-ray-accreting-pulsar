@@ -102,8 +102,8 @@ query = InputValues()
 
 ### CHANGE WITH YOUR FILEPATH ###
 
-file_name = f'bigdata'
-folder_path = "C:\\Users\\Utente\\Desktop"
+file_name = f'Database_100000'
+folder_path = "Database"
 file_path = os.path.join(folder_path, file_name)
 
 

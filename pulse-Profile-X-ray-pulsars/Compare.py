@@ -138,8 +138,8 @@ def storeVariables(filepath):
 
 ##########
 
-#file_name = f'bigdata'
-#folder_path = "C:\\Users\\Desktop"
-#file_path = os.path.join(folder_path, file_name)
+file_name = f'Database_100000'
+folder_path = "Database"
+file_path = os.path.join(folder_path, file_name)
 
-param1, param2, param3, rot_i, rot_a, magnc, shift = storeVariables("C:\\Users\\Utente\\Desktop\\prova\\output\\part-0.parquet")
+param1, param2, param3, rot_i, rot_a, magnc, shift = storeVariables(file_path)

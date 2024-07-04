@@ -27,9 +27,9 @@ import os
 
 size_data = 3
 
-file_name = 'bigdata_length_{0}'.format(size_data)
+file_name = f"Database_100000"
 
-folder_path = '/Users/Utente/Desktop'
+folder_path = 'Database'
 
 file_path = os.path.join(folder_path, file_name)  # One can also directly write a file that wants to use here
 

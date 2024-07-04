@@ -89,7 +89,8 @@ in different parquet files in the same specified folder, and then there is a fun
 - **Pulsar_Notebook.ipynb**: This is a notebook equivalent to the main one that explains the process in detail, thus facilitating a better understanding.
 
 
-- **Database.parquet**: This is the actual database containing the data simulated. It has been created with 25,590,656 simulated datasets and is ready to be used, for example, with ReadParquet and Compare.
+- **Database_100000.parquet**: This is the actual database containing the data simulated. It has been created with 100,000 simulated datasets and is ready to be used, for example, with ReadParquet and Compare.
+There will be a link to a bigger file, the definitive one, with more than 25 million datasets created, but GitHub did not allow me the upload
 
 
 # Prerequisites
