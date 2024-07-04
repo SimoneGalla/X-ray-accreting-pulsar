@@ -103,13 +103,8 @@ In order to run properly all parts of the project, the following packages should
 - scipy.interpolate
 - os
 - time
-<<<<<<< HEAD
 - pyarrow
 - functools
-
-=======
-- pyarrow 
->>>>>>> 1cb7e05a28f2a807b2ba9257b1e66652d7c0d3bf
 
 # How to run the project
 It is good to read and run the Jupyter Notebook first, in order to get a better idea of what the project does. Then one can simply download the project folder and use the files with your interpreter. 
