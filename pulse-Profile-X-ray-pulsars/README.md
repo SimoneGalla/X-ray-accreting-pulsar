@@ -20,7 +20,7 @@ They comprise a neutron star, which is the smaller and more compact of the two s
 The donor star supplies matter to the denser neutron star. 
 However, the neutron star is surrounded by a robust magnetosphere, which deflects and guides the matter along the field lines, and reaches the surface at the poles. 
 Upon reaching the surface, a considerable amount of energy is released in the form of X-rays. 
-This process can be compared to the phenomenon of the northern lights, which shine in our skies on Earth, but it is incredibly distruptive.
+
 ![ESA accreting pulsar](images/AccretingPulsar.jpeg)
 
 ### How do we observe them and which parameters do we need
@@ -29,13 +29,11 @@ The intense X-ray emission from them is observed as pulsations,which gives them 
 These pulsations are caused by the rotation of the neutron star
 and the misalignment between the spin axis and the magnetic axis of the neutron star. 
 
-
 The shape of the pulsations is known as the pulse profile, which can vary with energy, luminosity, orbital phase and other parameters. 
-
 
 The aim of this project is to vary some of these parameters
 (namely: the rotation axis angles, three parameters describing the beam pattern, the phase shift and the magnetic colatitude).
-These variations will then be used to simulate the observed hotspot pattern.
+These variations will then be used to simulate the observed pulse profile.
 
 ### The hotspot and the beam pattern
 The term "hotspot" refers to the point at which X-rays are emitted. For the purposes of this project, a single hotspot is considered. In order to locate it, we consider a single emitting hotspot located around the rotation axis. The position of this hotspot is described by the magnetic colatitude and the phase shift. These parameters are used to define the intrinsic angles of the hotspot on the surface of the star. The intrinsic angles univocally locate the hotspot on the star.
@@ -51,11 +49,19 @@ perpendicular to the normal direction to the surface.
 Finally, it can be emitted in a mixed configuration, 
 where the emission is more complicated and can happen in different directions. 
 
-The beam pattern will be studied in the project, with the aim of parametrizing a function describing the 
-emission with two angles. These angles will describe an inclination and an "azimuth" angle with respect to the 
-normal to the surface where the hotspot is emitting from.
+The following image describes these different 
+emissions, through an accretion column:
+
 ![beam emissions](images/beams_pulsar.png)
+
+The beam pattern will be studied in the project, with the aim of parametrizing a function describing the 
+emission with two angles. These angles will describe an "inclination" and an "azimuth" angle with respect to the 
+normal to the surface where the hotspot is emitting from. 
+
 Additionally, a parameter is defined that describes the "peakiness" of the observed pulse profile, namely the power of the beam emitted.
+
+It is important to point out that in the simulation the emitter is considered to be only a hotspot on the surface of the pulsar, 
+and not an accretion column. 
 
 A visual description of how the angles are defined is given:
 ![Angles in the project](images/angles_pulsar.png)
@@ -87,7 +93,9 @@ in different parquet files in the same specified folder, and then there is a fun
 
 - **Pulsar_Notebook.ipynb**: This is a notebook equivalent to the main one that explains the process in detail, thus facilitating a better understanding.
 
+
 - **Database folder**:
+
   - **Database_100000.parquet**: This is the actual database containing the data simulated. It has been created with 100,000     simulated datasets and is ready to be used, for example, with ReadParquet and Compare. Useful to run the codes fast, to understand how they work, since it has a relatively small size compared to the final one.
 
   - **LinkFullDatabase.md**: link to the full created database with more than 25 milion datasets created. Use this for research.
@@ -118,7 +126,7 @@ The two ways this project is intended to be used are:
 1. Simulate new data starting from the file defining the simulations.
 
 
-2. Read and use the database created in order to use it, ideally to train a machine learning to get the parameters of an accreting X-ray pulsar based on the pulse profile
+2. Read and use the database created, ideally to train a machine learning to get the parameters of an accreting X-ray pulsar based on the observed pulse profile
 
 # Data in the database
 
