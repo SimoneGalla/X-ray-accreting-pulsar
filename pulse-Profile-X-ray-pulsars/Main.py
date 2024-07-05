@@ -25,7 +25,7 @@ import os
 
 
 
-size_data = 3
+size_data = 5
 
 file_name = f"Database_100000"
 

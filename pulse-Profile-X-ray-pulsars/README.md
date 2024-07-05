@@ -10,6 +10,8 @@ This project defines the parameters of the X-ray pulsar and generates the expect
 - How to run the project
 - Usage
 - Data in the database
+- Example of usage
+- Choice of the file type
 
 # The physics
 The project is based on the physics and the simulation described in the PhD thesis: https://publikationen.uni-tuebingen.de/xmlui/handle/10900/144225, Saathoff, 2023
@@ -71,7 +73,7 @@ A visual description of how the angles are defined is given:
 
 be careful to change/adapt the file path when using the files, in order to save and read the database in a correct folder of your choice.
 
-- **PulsarPool.py**: This generates data of a given length utilising ProcessPoolExecutor, which parallelises the processes. It then saves the data in a Parquet file. 
+- **PulsarPool.py**: Generates data of a given length utilizing ProcessPoolExecutor, which parallelizes the processes. It then saves the data in a Parquet file. 
 It also defines the ranges of the parameters and the resolution. The process of saving the data starts with saving the datasets
 in different parquet files in the same specified folder, and then there is a function which merges all the files in one big file containing all the database
 
@@ -79,7 +81,7 @@ in different parquet files in the same specified folder, and then there is a fun
 - **PulsarListComprehension.py**: generates the data of a given length utilizing for cycles through list comprehension. This is alternative process to the PulsarPool.py one. This also saves the data in a Parquet file.
 
 
-- **ReadParquet.py**: defines the functions needed to read the Parquet file.
+- **ReadParquet.py**: defines the functions needed to read the Parquet file and to print the dictionary keys with a brief description.
 
 
 - **Compare.py**: reads the file where the simulated data are stored and defines the functions in order to compare them with an experimental example.
@@ -88,21 +90,22 @@ in different parquet files in the same specified folder, and then there is a fun
 - **main.py**: does all the things at once. The program creates datasets, saves them, reads them back, and compares them with experimental data. It does this with list comprehension, so it is useful to try the whole project at once, but it is not the most efficient way to save and generate the data.
 
 
-- **GetPulseProfileFromInput.py**: another example of how to use the data. It takes as input the seven parameters from the user and finds the pulse profile corresponding to the simulated data that is closest to the input ones.
+- **GetPulseProfileFromInput.py**: another example of how to use the data. It takes as input the seven parameters from the user and finds the pulse profile corresponding to the simulated data that is the closest to the input ones.
   
 
-- **Pulsar_Notebook.ipynb**: This is a notebook equivalent to the main one that explains the process in detail, thus facilitating a better understanding.
+- **Pulsar_Notebook.ipynb**: This is a notebook equivalent to the main script that explains the process in detail, thus facilitating a better understanding. It also includes the two examples of usage.
 
 
 - **Database folder**:
 
-  - **Database_100000.parquet**: This is the actual database containing the data simulated. It has been created with 100,000     simulated datasets and is ready to be used, for example, with ReadParquet and Compare. Useful to run the codes fast, to understand how they work, since it has a relatively small size compared to the final one.
+  - **Database_100000.parquet**: This is the actual database containing the data simulated. It has been created with 100,000 simulated datasets and it is ready to be used, for example, with ReadParquet and Compare. Useful to run the codes fast, to understand how they work, since it has a relatively small size compared to the final one.
 
   - **LinkFullDatabase.md**: link to the full created database with more than 25 milion datasets created. Use this for research.
 
 
 # Prerequisites
 In order to run properly all parts of the project, the following packages should be installed on your Python interpreter:
+
 - numpy
 - concurrent.futures 
 - pandas
@@ -119,7 +122,7 @@ It is good to read and run the Jupyter Notebook first, in order to get a better 
 
 **!!IMPORTANT!!**
 
-be careful to change/adapt the file path when using the files, in order to save and read the database in a correct folder of your choice.
+Be careful to change/adapt the file and folder paths when using the files, in order to save and read the database in a correct folder of your choice.
 
 # Usage
 The two ways this project is intended to be used are:
@@ -132,7 +135,7 @@ The two ways this project is intended to be used are:
 
 The data in the database are saved in the parquet format and can be easily read by the ReadParquet function provided. This returns a list of dictionaries each containing 7 different float parameters and the pulse profile (array of 32 entries). 
 
-The choice of using a list of dictionaries was made foreseeing an usage in machine learning, where labelling the data in an efficient way is fundamental. 
+The choice of using a list of dictionaries was made foreseeing a usage in machine learning, where labelling the data in an efficient way is fundamental. 
 
 One example of dictionary in the list is the following:
 
@@ -159,7 +162,7 @@ The example of usage explains how to use the data produced. I fitted an experime
 
 ## Choice of the file type
 
-The file type (parquet) was selected following an analysis of the performance of different file types in terms of three key areas:
+The file type to store the data (parquet) was selected following an analysis of the performance of different file types in terms of three key areas:
 
 - Time efficiency
 - Storage dimension
