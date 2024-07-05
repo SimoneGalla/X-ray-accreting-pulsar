@@ -1,13 +1,23 @@
-import pandas as pd
 import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-from ReadParquet import printKeys, readParquetToDict
+
+from ReadParquet import readParquetToDict
+
+""" This file is given as an example of usage of the data stored in the database. 
+The user is asked to input 7 parameters, and the program reads the database and returns the pulse profile that is 
+closest to the given 7 parameters.
+
+It is useful in order to understand how to handle the data stored in the database.
+
+Remember to change the name of the database file according to the path on your computer."""
 
 
 def get_float_input(prompt, min_val, max_val):
-    """This function assures that the user gives a correct input. The input should be a number that
+    """This function assures that the user gives a correct input. The input should be a number (float) that
     lies between a minimum and a maximum value, in order to have physical meaning.
+
     Parameters:
         ---------
         prompt (string): the input that the user gives to the machine
@@ -18,6 +28,7 @@ def get_float_input(prompt, min_val, max_val):
         --------
     The while assures us to be in an infinite loop that stops only when the user inputs a correct value for
     the parameter. This function also transforms the input (a string) into a float that can be used for calculations"""
+
     while True:
         try:
             value = float(input(prompt))
@@ -39,7 +50,6 @@ def InputValues():
     """
     input("Hello!!! Press something to start input the data, I am here just to catch you attention")
 
-
     # Get user inputs with validation
     rot_i_query = get_float_input("Please, enter the rotation inclination (-90 to 90): ", -90, 90)
     rot_a_query = get_float_input("Enter the rotation azimuth (-180 to 180): ", -180, 180)
@@ -49,17 +59,17 @@ def InputValues():
     p3_query = get_float_input("Enter the beam pattern power (0 to 20): ", 0, 20)
     shift_query = get_float_input("Enter the phase shift (-3.14 to 3.14): ", -3.14, 3.14)
     query = {"rotation inclination": rot_i_query, "rotation azimuth": rot_a_query,
-         "magnetic colatitude": magnc_query, "param1": p1_query, "param2": p2_query,
-         "param3": p3_query, "shift": shift_query}
+             "magnetic colatitude": magnc_query, "param1": p1_query, "param2": p2_query,
+             "param3": p3_query, "shift": shift_query}
 
     return query
 
 
 def FilterData(loaded_data, query):
-    """Filters the data in the datasets read from the parquet file. The data are iterated over all the keys,
+    """Filters the data in the datasets stored in the parquet file. The data are iterated over all the keys,
     that correspond to the keys of the input parameters required from the user. Then for every element we compare
     the value corresponding to the key with the input value, and we find the closest ones in the dataset.
-    At a successive step we filter out all the data which are not the closest. Repeating this over all the keys wil give back only one last dictionary.
+    At a successive step we filter out all the data which are not the closest. Repeating this over all the keys will return only one last dictionary.
 
     Parameters:
         --------
@@ -67,7 +77,7 @@ def FilterData(loaded_data, query):
         query (dictionary): dictionary of all the input parameters. The keys match the keys of loaded_data
 
     Returns:
-        The closest dictionary from the dataset with respect to the input values, containing also the pulse profile
+        The closest dictionary from the dataset with respect to the input values, containing also the pulse profile.
 
     Notes:
         -------
@@ -97,7 +107,8 @@ def FilterData(loaded_data, query):
 
     return filtered_data_query[0]
 
-#Ask the user which parameters they want to use
+
+# Ask the user which parameters they want to use
 query = InputValues()
 
 ### CHANGE WITH YOUR FILEPATH ###
@@ -106,26 +117,24 @@ file_name = f'Database_100000'
 folder_path = "Database"
 file_path = os.path.join(folder_path, file_name)
 
-
 loaded_data = readParquetToDict(file_path)
 
-#Use the defined function to find the closest dictionary to the input data
+# Use the defined function to find the closest dictionary to the input data
 closest_data = FilterData(loaded_data, query)
 
 # Print the filtered data
 print("The closest simulated data, with corresponding hotspot pattern, to the input parameters are:", closest_data)
 
-
-#The following lines are just for the plot
+# The following lines are just for the plot
 
 x = np.linspace(0, 1, 32)
 plt.plot(x, closest_data["hotspot pattern"])
 textstr = '\n'.join((
-        r'$param1$: %f' % (closest_data["param1"]),
-        r'$param2$: %f' % (closest_data["param2"]), r'$param3:%f$' % (closest_data["param3"]),
-        r'rotation inclination: %f' % (closest_data["rotation inclination"]),
-        r'rotation azimuth: %f' % (closest_data["rotation azimuth"]), r'$shift:%f$' % (closest_data["shift"])))
+    r'$param1$: %f' % (closest_data["param1"]),
+    r'$param2$: %f' % (closest_data["param2"]), r'$param3:%f$' % (closest_data["param3"]),
+    r'rotation inclination: %f' % (closest_data["rotation inclination"]),
+    r'rotation azimuth: %f' % (closest_data["rotation azimuth"]), r'$shift:%f$' % (closest_data["shift"])))
 plt.title("Closest simulated pulse pattern to the given input parameters")
 plt.text(0.05, 0.95, textstr, transform=plt.gca().transAxes,
-             fontsize=8, verticalalignment='top', bbox=dict(facecolor='green', alpha=0.1))
+         fontsize=8, verticalalignment='top', bbox=dict(facecolor='green', alpha=0.1))
 plt.show()

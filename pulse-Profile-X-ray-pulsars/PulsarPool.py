@@ -804,7 +804,7 @@ def databaseCreation(length):
 
                 ### CHANGE WITH YOUR FILE PATH###
                 file_name = 'bigdata_rot_a_{0}_rot_i_{1}'.format(rot_a[b] ,rot_i[a]) # Every iteration will have its own file
-                folder_path = 'Database' #Change the name here according to your folder
+                folder_path = 'Databasetry' #Change the name here according to your folder
                 file_path = os.path.join(folder_path, file_name)
                 open(file_path, 'w').close()  # Creates the file
 
