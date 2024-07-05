@@ -1,23 +1,21 @@
-#Here I will combine parts of the other lighthouse files to fit simulated beam patterns to the observed beam pattern.
-import numpy as np
-from scipy.interpolate import interp2d, RectBivariateSpline
-import os
-from tqdm import tqdm
+# Here I will combine parts of the other lighthouse files to fit simulated beam patterns to the observed beam pattern.
 import time
+
+import numpy as np
 import pandas as pd
+from scipy.interpolate import RectBivariateSpline
+from tqdm import tqdm
 
-
-"""This python files describes all the functions regarding the physics of the x-ray pulsars emission.
+"""This python file describes all the functions regarding the physics of the x-ray pulsars emission.
 Furthermore it calculates a simulated hotspot pattern for each parameters.
 
 At the end the simulated data are stored in a list of dictionaries, where all the simulated parameters are stored, 
-alongside with the correspondent hotspot pattern.
+alongside with the correspondent pulse profile.
 
 These functions are the basic data creation for the main() file. The data could be saved in a parquet file decommenting the last lines"""
 
 
 def cart2sph(x, y, z):
-
     xy = np.sqrt(x ** 2 + y ** 2)
 
     r = np.sqrt(x ** 2 + y ** 2 + z ** 2)
@@ -28,15 +26,14 @@ def cart2sph(x, y, z):
 
 
 def sph2cart(r, theta, phi):
-
     X = r * np.sin(theta) * np.cos(phi)
     Y = r * np.sin(theta) * np.sin(phi)
     Z = r * np.cos(theta)
     return X, Y, Z
 
 
-
 def hotspotXYZ(RotationInclination, RotationAzimut, MagnColatitude, npoints, shift=0):
+
     """This function defines the position of the hotspot.
 
         Parameters:
@@ -79,12 +76,13 @@ def hotspotXYZ(RotationInclination, RotationAzimut, MagnColatitude, npoints, shi
     ## --- Rotation of the hotspot around the rotation axis --- ###
     phirot = np.linspace(0 + shift, 2 * np.pi + shift,
                          npoints).tolist()  # We create an array of equispaced angles based on the defined shift
-    rot = [Rotation.from_rotvec(x * rotax) for x in phirot]  # Rotation.from_rotvec defines the parameters for a rotation around a point
+    rot = [Rotation.from_rotvec(x * rotax) for x in
+           phirot]  # Rotation.from_rotvec defines the parameters for a rotation around a point
 
-    hotspot = [x.apply(hotspot) for x in rot]  # Creates different possible hotspots around the rotation axis, applying the rotation with x.apply(),
+    hotspot = [x.apply(hotspot) for x in
+               rot]  # Creates different possible hotspots around the rotation axis, applying the rotation with x.apply(),
     # using hotspot we have the rotation based on the MagnColatitude, all the vectors defining this rotation will have a MagnColatitude angle with respect to the rotation axis
     return hotspot
-
 
 
 def GravitationalLightBending(psi):
@@ -113,7 +111,6 @@ def GravitationalLightBending(psi):
         1 - (1 - np.cos(psi)) * (1 - rg / r))  # Beloborodov 2002 Equation 1; psi in B02 = beta for me; alpha = alpha
 
     return alpha
-
 
 
 def intrinsicAngles(hotspotLoc):
@@ -152,7 +149,6 @@ def intrinsicAngles(hotspotLoc):
                             intrinsicPhi)  # need this because of geometrical symmetries that are not part of the equation in GravitationalLightBending
 
     return hotspotTheta, hotspotPhi, intrinsicTheta, intrinsicPhi
-
 
 
 def defBeampattern(irange, arange, grid1, grid2, param1, param2, param3, param4, param5):
@@ -203,22 +199,20 @@ def defBeampattern(irange, arange, grid1, grid2, param1, param2, param3, param4,
 
      """
 
-
-
     beampattern = (np.cos(grid2 + param1) * np.cos(grid1 + param2)) ** int(param3)
-    #irange_asym = np.array(np.cos(irange) * param4)
-    #arange_asym = np.array(np.cos(arange) * param5)
-    #beampattern = beampattern.T
-   # beampattern += irange_asym  # adding the asymmetries to the pattern calculated before
-    #beampattern = beampattern.T
-    #beampattern += arange_asym
+    # irange_asym = np.array(np.cos(irange) * param4)
+    # arange_asym = np.array(np.cos(arange) * param5)
+    # beampattern = beampattern.T
+    # beampattern += irange_asym  # adding the asymmetries to the pattern calculated before
+    # beampattern = beampattern.T
+    # beampattern += arange_asym
 
     beampattern = np.abs(beampattern)
     beampattern /= np.max(beampattern)
-    beampattern  = np.where(grid1 > np.pi/2, 0, beampattern)
-    beampattern  = np.where(grid2 > np.pi/2, 0, beampattern)
-    beampattern  = np.where(grid1 < -np.pi/2, 0, beampattern)
-    beampattern  = np.where(grid2 < -np.pi/2, 0, beampattern)
+    beampattern = np.where(grid1 > np.pi / 2, 0, beampattern)
+    beampattern = np.where(grid2 > np.pi / 2, 0, beampattern)
+    beampattern = np.where(grid1 < -np.pi / 2, 0, beampattern)
+    beampattern = np.where(grid2 < -np.pi / 2, 0, beampattern)
     return beampattern
 
 
@@ -274,7 +268,8 @@ def f_parametrized(RotationInclination, RotationAzimuth, MagnColatitude, param1,
     pattern = defBeampattern(irange, arange, grid1, grid2, param1, param2, param3, param4, param5)
     r = RectBivariateSpline(irange, arange, pattern.T)
 
-    patternSpline = lambda x, y: r(x, y).T  # gives a function that can interpolate the grid (x y axis) with the beam pattern (z axis)
+    patternSpline = lambda x, y: r(x,
+                                   y).T  # gives a function that can interpolate the grid (x y axis) with the beam pattern (z axis)
 
     hotspotPattern = [patternSpline(intrinsicTheta[i], intrinsicPhi[i]) for i in
                       range(len(intrinsicPhi))]  # Evaluate the interpolating function at the angles of the hotspot
@@ -285,10 +280,8 @@ def f_parametrized(RotationInclination, RotationAzimuth, MagnColatitude, param1,
         pattern, hotspotPattern, param1, param2, param3, param4, param5
 
 
-
-# Define initial parameters
+# Define parameters
 def ranges(i):
-
     """This function defines the ranges of variation of the parameters in order to create the data
 
 
@@ -309,13 +302,15 @@ def ranges(i):
 
         """
 
-    rot_i = np.linspace(-90, 90, i + 3) # More important, I added 3 iterations for now, there can be more
+    rot_i = np.linspace(-90, 90, i + 3)  # More important, I added 3 iterations for now, there can be more
 
-    rot_a = np.linspace(-150, 180, i, endpoint=False) # Not super interested if the hotspot is behind the star, exclude +-180
+    rot_a = np.linspace(-150, 180, i,
+                        endpoint=False)  # Not super interested if the hotspot is behind the star, exclude +-180
 
     magnc = np.linspace(0, 90, i)
 
-    shift = np.linspace(-np.pi, np.pi, i, endpoint=False) # Set some endpoint= False because I think they would lead to the same result
+    shift = np.linspace(-np.pi, np.pi, i,
+                        endpoint=False)  # Set some endpoint= False because I think they would lead to the same result
 
     p1 = np.linspace(-np.pi, np.pi, i, endpoint=False)
 
@@ -323,16 +318,11 @@ def ranges(i):
 
     p3 = np.linspace(0, 20, 4)  # Less important, let us limit to 4 interactions
 
-
-
     # init_p4 = np.linspace(0, 1, 5) #These are asymmetry parameters, ignore for now
 
     # p5 = np.linspace(0, 1, 5)
 
-
-
     return rot_i, rot_a, magnc, shift, p1, p2, p3
-
 
 
 def dataGenerator(number_data, file_path):
@@ -348,16 +338,14 @@ def dataGenerator(number_data, file_path):
     Returns:
         ----------
         The list of dictionaries containing all the simulated data, and it also prints the time it takes in minutes"""
-#   Determine the ranges of variation of the parameters
+    #   Determine the ranges of variation of the parameters
     rot_i, rot_a, magnc, shift, p1, p2, p3 = ranges(number_data)
 
-    data = []
-
-
-    #Iterating over all the possible combinations of parameters
+    # Iterating over all the possible combinations of parameters
     start = time.time()
-    #The following lines evaluate the function with the different set of parameters decided
-    #Use a list comprehension and a progress bar to check the results
+    # The following lines evaluate the function with the different set of parameters decided
+    # Use a list comprehension and a progress bar to check the results
+
     with tqdm(total=len(p1) * len(p2) * len(p3) * len(rot_i) * len(rot_a) * len(magnc) * len(shift)) as pbar:
         data = [
             {
@@ -383,24 +371,20 @@ def dataGenerator(number_data, file_path):
             if not pbar.update(1)  # Update the progress bar
         ]
 
-                        #Just check that something is happening, change it with a progress bar if needed
-
     end = time.time()
-    print("Time in minutes: ", (end-start)/60)
+    print("Time in minutes: ", (end - start) / 60)
 
-    #Create the dataframe and save it to a file
+    # Create the dataframe and save it to a file
     df = pd.DataFrame(data)
     df.to_parquet(file_path, engine='pyarrow', index=False)
     return data
 
-### Decomment to get this self-compiling to create a file ###
+### Decomment to make this script creating a file ###
 
 
-#i = 5  # Choose the length of the ranges of the parameters
-#file_path = ""
-#data = dataGenerator(i, file_path)
+# i = 5  # Choose the length of the ranges of the parameters
+# file_path = ""
+# data = dataGenerator(i, file_path)
 
-#Check that data are indeed saved in the list
-#print("Size: ", np.size(data))
-
-
+# Check that data are indeed saved in the list
+# print("Size: ", np.size(data))
